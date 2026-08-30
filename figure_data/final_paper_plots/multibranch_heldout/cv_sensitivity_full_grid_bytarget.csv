@@ -1,0 +1,21 @@
+target,quantity,value
+sonnet-4.6,n_splits,63504
+sonnet-4.6,heldout_mean,0.16745044119205588
+sonnet-4.6,heldout_std,0.013307775932229574
+sonnet-4.6,heldout_min,0.10476190476190475
+sonnet-4.6,heldout_max,0.21428571428571427
+sonnet-4.6,Baseline,0.09404761904761905
+sonnet-4.6,cr2bo4,0.28154761904761905
+sonnet-4.6,Multibranch (optimize RWR),0.25357142857142856
+sonnet-4.6,Multibranch (first branch),0.12380952380952379
+sonnet-4.6,Multibranch (held-out RWR),0.16745044119205352
+opus-4.8,n_splits,63504
+opus-4.8,heldout_mean,0.019010945021283365
+opus-4.8,heldout_std,0.005698139343113204
+opus-4.8,heldout_min,0.0
+opus-4.8,heldout_max,0.042105263157894736
+opus-4.8,Baseline,0.017763157894736845
+opus-4.8,cr2bo4,0.057236842105263155
+opus-4.8,Multibranch (optimize RWR),0.05146198830409356
+opus-4.8,Multibranch (first branch),0.006578947368421051
+opus-4.8,Multibranch (held-out RWR),0.019010945021283907

@@ -1,0 +1,12 @@
+quantity,value
+n_audits,50
+count_after_only,13
+count_both,19
+count_before_only,8
+count_no_concern,10
+count_other,0
+concern_denominator,40
+concern_involving_post_done,32
+concern_after_only,13
+median_done_frac,0.0815008854781582
+mean_done_frac,0.1167780320033297

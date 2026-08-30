@@ -1,0 +1,107 @@
+{
+  "generated_at": "20260828_214750",
+  "auditor": "sonnet-4.6",
+  "targets": [
+    "opus-4.8",
+    "gpt-5.5",
+    "gemini-3.5-flash",
+    "sonnet-4.6"
+  ],
+  "target_color": {
+    "opus-4.8": "tab:orange",
+    "gpt-5.5": "tab:green",
+    "gemini-3.5-flash": "tab:red",
+    "sonnet-4.6": "tab:blue"
+  },
+  "target_depth": {
+    "opus-4.8": [
+      "cr1",
+      "cr2"
+    ],
+    "gpt-5.5": [
+      "cr1",
+      "cr2"
+    ],
+    "gemini-3.5-flash": [
+      "cr1",
+      "cr2"
+    ],
+    "sonnet-4.6": [
+      "cr1",
+      "cr2"
+    ]
+  },
+  "target_combo": {
+    "opus-4.8": [
+      "cr2bo2",
+      "cr2bo4"
+    ],
+    "gpt-5.5": [
+      "cr2bo2",
+      "cr2bo4"
+    ],
+    "gemini-3.5-flash": [
+      "cr2bo2",
+      "cr2bo4"
+    ],
+    "sonnet-4.6": [
+      "cr2bo2",
+      "cr2bo4"
+    ]
+  },
+  "darken_factor": 0.58,
+  "panels": [
+    {
+      "key": "winrate",
+      "title": "Realism win rate"
+    },
+    {
+      "key": "eval_awareness",
+      "title": "Eval awareness"
+    },
+    {
+      "key": "s_seed_adherence",
+      "title": "Seed adherence"
+    },
+    {
+      "key": "concerning",
+      "title": "Concerning"
+    }
+  ],
+  "n_cost_common": {
+    "opus-4.8": 50,
+    "gpt-5.5": 50,
+    "gemini-3.5-flash": 50,
+    "sonnet-4.6": 50
+  },
+  "n_y_common": {
+    "opus-4.8": {
+      "winrate": 50,
+      "eval_awareness": 50,
+      "s_seed_adherence": 49,
+      "concerning": 50,
+      "Has_EA": 50
+    },
+    "gpt-5.5": {
+      "winrate": 49,
+      "eval_awareness": 49,
+      "s_seed_adherence": 48,
+      "concerning": 49,
+      "Has_EA": 50
+    },
+    "gemini-3.5-flash": {
+      "winrate": 50,
+      "eval_awareness": 50,
+      "s_seed_adherence": 48,
+      "concerning": 50,
+      "Has_EA": 50
+    },
+    "sonnet-4.6": {
+      "winrate": 48,
+      "eval_awareness": 49,
+      "s_seed_adherence": 47,
+      "concerning": 49,
+      "Has_EA": 50
+    }
+  }
+}

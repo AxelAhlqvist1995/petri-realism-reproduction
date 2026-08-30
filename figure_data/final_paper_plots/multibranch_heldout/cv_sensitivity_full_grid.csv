@@ -1,0 +1,11 @@
+quantity,value
+n_splits,63504
+heldout_mean,0.17521203067394758
+heldout_std,0.012755648476830321
+heldout_min,0.11632653061224488
+heldout_max,0.22448979591836735
+Baseline,0.08928571428571429
+cr2bo4,0.2780612244897959
+Multibranch (optimize RWR),0.2571428571428571
+Multibranch (first branch),0.13571428571428573
+Multibranch (held-out RWR),0.1752120306739434

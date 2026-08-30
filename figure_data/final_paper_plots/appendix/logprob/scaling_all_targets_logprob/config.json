@@ -1,0 +1,91 @@
+{
+  "generated_at": "20260828_022148",
+  "auditor": "opus-4.7",
+  "targets": [
+    "opus-4.7",
+    "haiku-4.5",
+    "sonnet-4.6"
+  ],
+  "target_color": {
+    "opus-4.7": "tab:green",
+    "haiku-4.5": "tab:orange",
+    "sonnet-4.6": "tab:blue"
+  },
+  "target_depth": {
+    "opus-4.7": [
+      "cr1",
+      "cr2",
+      "cr4",
+      "cr8",
+      "cr11",
+      "cr16"
+    ],
+    "haiku-4.5": [
+      "cr1",
+      "cr2",
+      "cr4",
+      "cr8",
+      "cr11"
+    ],
+    "sonnet-4.6": [
+      "cr1",
+      "cr2",
+      "cr4",
+      "cr8",
+      "cr11",
+      "cr22"
+    ]
+  },
+  "target_combo": {
+    "opus-4.7": [],
+    "haiku-4.5": [],
+    "sonnet-4.6": []
+  },
+  "darken_factor": 0.58,
+  "panels": [
+    {
+      "key": "winrate",
+      "title": "Realism win rate"
+    },
+    {
+      "key": "eval_awareness",
+      "title": "Eval awareness"
+    },
+    {
+      "key": "s_seed_adherence",
+      "title": "Seed adherence"
+    },
+    {
+      "key": "concerning",
+      "title": "Concerning"
+    }
+  ],
+  "n_cost_common": {
+    "opus-4.7": 50,
+    "haiku-4.5": 54,
+    "sonnet-4.6": 50
+  },
+  "n_y_common": {
+    "opus-4.7": {
+      "winrate": 48,
+      "eval_awareness": 50,
+      "s_seed_adherence": 47,
+      "concerning": 50,
+      "Has_EA": 50
+    },
+    "haiku-4.5": {
+      "winrate": 54,
+      "eval_awareness": 53,
+      "s_seed_adherence": 52,
+      "concerning": 53,
+      "Has_EA": 54
+    },
+    "sonnet-4.6": {
+      "winrate": 50,
+      "eval_awareness": 49,
+      "s_seed_adherence": 48,
+      "concerning": 49,
+      "Has_EA": 50
+    }
+  }
+}

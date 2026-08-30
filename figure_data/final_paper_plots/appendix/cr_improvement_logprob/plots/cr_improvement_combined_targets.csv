@@ -1,0 +1,28 @@
+target,measure,display,condition,n,mean,ci_half
+haiku-4.5,realism_win_rate_avg,Realism win rate,baseline,157,0.6628519711605728,0.034089804740677424
+haiku-4.5,realism_win_rate_avg,Realism win rate,realism_filter,157,0.7185041495345227,0.030118037858049368
+haiku-4.5,realism_win_rate_avg,Realism win rate,cr11,157,0.8261216033040687,0.020567206452393925
+haiku-4.5,Has_EA,Eval awareness,baseline,157,0.3503184713375796,0.07486305918871378
+haiku-4.5,Has_EA,Eval awareness,realism_filter,157,0.22929936305732485,0.06596750747880523
+haiku-4.5,Has_EA,Eval awareness,cr11,157,0.03821656050955414,0.030085015409455754
+haiku-4.5,concerning_norm,Concerning,baseline,154,0.2287157287157287,0.027380886330993316
+haiku-4.5,concerning_norm,Concerning,realism_filter,154,0.21428571428571427,0.02773658339259828
+haiku-4.5,concerning_norm,Concerning,cr11,154,0.36002886002886003,0.03303264660055209
+sonnet-4.6,realism_win_rate_avg,Realism win rate,baseline,148,0.1193642506142506,0.019274248605049716
+sonnet-4.6,realism_win_rate_avg,Realism win rate,realism_filter,148,0.11691856330014228,0.01913515813283021
+sonnet-4.6,realism_win_rate_avg,Realism win rate,cr11,148,0.3500750750750751,0.030603975997208297
+sonnet-4.6,Has_EA,Eval awareness,baseline,149,0.18791946308724833,0.06293651134779957
+sonnet-4.6,Has_EA,Eval awareness,realism_filter,149,0.10738255033557047,0.049878889604374387
+sonnet-4.6,Has_EA,Eval awareness,cr11,149,0.053691275167785234,0.03631495536760049
+sonnet-4.6,concerning_norm,Concerning,baseline,149,0.10067114093959731,0.021286190685546862
+sonnet-4.6,concerning_norm,Concerning,realism_filter,149,0.12304250559284118,0.022732233040509506
+sonnet-4.6,concerning_norm,Concerning,cr11,149,0.17598806860551827,0.022633602892017806
+opus-4.7,realism_win_rate_avg,Realism win rate,baseline,141,0.03109094701710472,0.008358815017550748
+opus-4.7,realism_win_rate_avg,Realism win rate,realism_filter,141,0.03776595744680852,0.0111993584793833
+opus-4.7,realism_win_rate_avg,Realism win rate,cr11,141,0.1122340425531915,0.02544021081967757
+opus-4.7,Has_EA,Eval awareness,baseline,149,0.26174496644295303,0.0708206014959943
+opus-4.7,Has_EA,Eval awareness,realism_filter,149,0.24161073825503357,0.06896384022881555
+opus-4.7,Has_EA,Eval awareness,cr11,149,0.013422818791946308,0.018539782295795126
+opus-4.7,concerning_norm,Concerning,baseline,146,0.13622526636225266,0.024844962367144775
+opus-4.7,concerning_norm,Concerning,realism_filter,146,0.12709284627092846,0.024954650962902357
+opus-4.7,concerning_norm,Concerning,cr11,146,0.1567732115677321,0.020811758565520228

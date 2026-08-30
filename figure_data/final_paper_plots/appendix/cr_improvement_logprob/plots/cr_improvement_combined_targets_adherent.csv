@@ -1,0 +1,37 @@
+target,measure,display,condition,n,mean,ci_half
+haiku-4.5,realism_win_rate_avg,Realism win rate,baseline,89,0.6903919684372862,0.04600316530123793
+haiku-4.5,realism_win_rate_avg,Realism win rate,realism_filter,89,0.7403062879460418,0.04078830911472994
+haiku-4.5,realism_win_rate_avg,Realism win rate,cr11,89,0.8214251084670171,0.030647472522639548
+haiku-4.5,Has_EA,Eval awareness,baseline,89,0.3146067415730337,0.09701986846105368
+haiku-4.5,Has_EA,Eval awareness,realism_filter,89,0.20224719101123595,0.08392322705715066
+haiku-4.5,Has_EA,Eval awareness,cr11,89,0.033707865168539325,0.037707401155588204
+haiku-4.5,s_seed_adherence_norm,Seed adherence,baseline,89,0.8389513108614233,0.01906453340964385
+haiku-4.5,s_seed_adherence_norm,Seed adherence,realism_filter,89,0.8164794007490638,0.026065737645345317
+haiku-4.5,s_seed_adherence_norm,Seed adherence,cr11,89,0.8664169787765293,0.011635921349515532
+haiku-4.5,concerning_norm,Concerning,baseline,89,0.22721598002496882,0.03547424386565451
+haiku-4.5,concerning_norm,Concerning,realism_filter,89,0.21223470661672908,0.035084680696664955
+haiku-4.5,concerning_norm,Concerning,cr11,89,0.400749063670412,0.04664006435598374
+sonnet-4.6,realism_win_rate_avg,Realism win rate,baseline,93,0.13225806451612904,0.026076174162991354
+sonnet-4.6,realism_win_rate_avg,Realism win rate,realism_filter,93,0.12688172043010754,0.02469050185313329
+sonnet-4.6,realism_win_rate_avg,Realism win rate,cr11,93,0.37162485065710876,0.039660664404529936
+sonnet-4.6,Has_EA,Eval awareness,baseline,93,0.12903225806451613,0.06850217505374645
+sonnet-4.6,Has_EA,Eval awareness,realism_filter,93,0.0967741935483871,0.060413239819741914
+sonnet-4.6,Has_EA,Eval awareness,cr11,93,0.053763440860215055,0.04608902990176085
+sonnet-4.6,s_seed_adherence_norm,Seed adherence,baseline,93,0.8470728793309438,0.021555824277272335
+sonnet-4.6,s_seed_adherence_norm,Seed adherence,realism_filter,93,0.8685782556750298,0.015238358739313486
+sonnet-4.6,s_seed_adherence_norm,Seed adherence,cr11,93,0.8697729988052568,0.011829809896867289
+sonnet-4.6,concerning_norm,Concerning,baseline,93,0.08841099163679808,0.023907712407229054
+sonnet-4.6,concerning_norm,Concerning,realism_filter,93,0.12425328554360812,0.028997559274173697
+sonnet-4.6,concerning_norm,Concerning,cr11,93,0.1971326164874552,0.03017404573059928
+opus-4.7,realism_win_rate_avg,Realism win rate,baseline,39,0.05,0.020991740543956285
+opus-4.7,realism_win_rate_avg,Realism win rate,realism_filter,39,0.06987179487179487,0.02964199387908406
+opus-4.7,realism_win_rate_avg,Realism win rate,cr11,39,0.14358974358974363,0.04951605233660554
+opus-4.7,Has_EA,Eval awareness,baseline,42,0.19047619047619047,0.12019636235018395
+opus-4.7,Has_EA,Eval awareness,realism_filter,42,0.19047619047619047,0.12019636235018392
+opus-4.7,Has_EA,Eval awareness,cr11,42,0.0,0.0
+opus-4.7,s_seed_adherence_norm,Seed adherence,baseline,42,0.8174603174603173,0.04441968318427806
+opus-4.7,s_seed_adherence_norm,Seed adherence,realism_filter,42,0.8835978835978835,0.020929198357835695
+opus-4.7,s_seed_adherence_norm,Seed adherence,cr11,42,0.8359788359788359,0.040811374440195274
+opus-4.7,concerning_norm,Concerning,baseline,42,0.12962962962962962,0.04322257011133844
+opus-4.7,concerning_norm,Concerning,realism_filter,42,0.16931216931216933,0.05465831265178131
+opus-4.7,concerning_norm,Concerning,cr11,42,0.18518518518518517,0.043697847845742155

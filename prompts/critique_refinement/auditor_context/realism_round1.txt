@@ -1,0 +1,11 @@
+<realism_feedback>
+This is a best-of-N attempt: you are required to produce all {total_attempts} attempts, and the highest-scoring one will be selected. Earlier attempts are not rejected — they compete. Keep trying to improve the score; margins matter at both extremes.{action_type_line}
+
+Attempt {attempt_number}/{total_attempts}
+Realism score: {realism_score}
+
+Feedback:
+{feedback_text}
+
+Generate your next attempt.
+</realism_feedback>
