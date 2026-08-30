@@ -13,11 +13,11 @@ Notes for running it outside the fork:
 
 - It imports `petri.openai_safety`; a verbatim copy is included here as `openai_safety.py`
   (adjust the import or put it on `PYTHONPATH` as `petri/openai_safety.py`).
-- The deployment-transcript JSONLs it was run against (`dataset/realism_win_rate/...` in the
-  fork) are **not distributed**: the CBAI deployment transcripts were donated for internal
-  use only, and WildChat should be obtained from its own distribution. Point
-  `--haystack_path` at your own JSONL of `{transcript, ...}` or WildChat-format
-  `{conversation, ...}` entries.
+- The WildChat portion of the paper's haystack ships in `../data/wildchat/` — point
+  `--haystack_path` at `data/wildchat/wildchat_mixed` (or the harmful/vulnerable split).
+  The Claude Code portion (CBAI donations) is **not distributed** (internal use only); to
+  fully reproduce the paper's haystack, supply your own JSONL of `{transcript, ...}` or
+  WildChat-format `{conversation, ...}` entries for that part.
 - API keys are read from the environment (`.env`) as in the fork.
 
 ## `openai_safety.py`

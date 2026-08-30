@@ -106,6 +106,13 @@ they serve as provenance rather than standalone runnable code. Two data files we
 one JSON containing verbatim transcript excerpts and one CSV of per-transcript human
 annotations.
 
+### `data/wildchat/`
+
+The 20 WildChat conversations (10 harmful, 10 vulnerable) used as deployment transcripts in
+the realism win rate haystack, redistributed with attribution under WildChat's ODC-BY
+license so the measure can be reproduced without re-deriving the exact subset. See
+`data/wildchat/README.md` for provenance.
+
 ### `code/`
 
 - `realism_win_rate.py` — the needle-in-haystack realism win rate implementation used in the
@@ -114,9 +121,9 @@ annotations.
 
 ## What is deliberately not here
 
-- **No audit transcripts, deployment transcripts, or WildChat data.** The CBAI deployment
-  transcripts were donated for internal use only and will not be released; WildChat is
-  available upstream from its own distribution.
+- **No audit transcripts and no Claude Code deployment transcripts.** The CBAI deployment
+  transcripts were donated for internal use only and will not be released. (The WildChat
+  portion of the realism win rate haystack *is* included, under `data/wildchat/`.)
 - No datasets or experiment outputs (hundreds of MB in the fork).
 - Not a runnable Petri fork — for running audits, use upstream Petri plus
   [petri-bon](https://github.com/AxelAhlqvist1995/petri-bon).

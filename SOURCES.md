@@ -64,6 +64,7 @@ been converted back to literal angle brackets here.
 | `seeds/paper_seed_sets.json` | `seed_instruction_ids` from the run configs named in each entry's `source_config`, expanded with `expand_seed_ids` from `experiments/audit/run.py` |
 | `config/defaults.yaml` | `experiments/audit/defaults.yaml` (verbatim) |
 | `figure_data/final_paper_plots/` | `experiments/general_plotting/final_paper_plots/` minus PNGs, caches, and two withheld data files (`appendix/endsignal/endsignal_concerning.json` — verbatim transcript excerpts; `appendix/ea_judge_vs_human_grids/plots/pairs.csv` — per-transcript human annotations) |
+| `data/wildchat/wildchat_{harmful,vulnerable,mixed}` | `dataset/realism_win_rate/` in the fork (byte-for-byte; WildChat data, ODC-BY — see `data/wildchat/README.md`) |
 | `code/realism_win_rate.py` | `experiments/transcript_realism/realism_win_rate.py` (verbatim) |
 | `code/openai_safety.py` | `src/petri/openai_safety.py` (verbatim) |
 
