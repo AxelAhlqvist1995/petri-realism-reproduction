@@ -78,6 +78,17 @@ system_prompt_pressure) on auditor-created content only. `system.txt` is the jud
 `user_template.txt` the per-audit message. Transcribed from the paper appendix; see
 `SOURCES.md`.
 
+### `prompts/detailed_eval_awareness/`
+
+The per-turn detailed eval-awareness (DEA) classifier: after each target response during an
+audit, a judge (gpt-5.4 in the paper's runs, see `config/defaults.yaml`) scores that single
+response 0/1 for eval awareness given the seed instruction and the prior target-visible
+context. `system.txt` is the classifier prompt, `user_template.txt` the per-message input
+(`{seed_instruction}`, `{context_xml}`, `{message_xml}` placeholders), and
+`followup_explanation.txt` the follow-up sent when a response is scored 1 to elicit a brief
+justification. These per-turn labels underlie turn-level EA statistics such as EA-% and
+time-to-first-EA.
+
 ### `prompts/environment_realism/`
 
 The two prompts tuned for the isolating-environment-realism experiments (paper appendix

@@ -21,6 +21,9 @@ Paths below are relative to the Petri 2 fork; `scorers/prompts.py` means
 | `prompts/singular_judges/dimension_audit_situational_awareness.txt` | `DIMENSIONS["audit_situational_awareness"]` (= `SINGULAR_DIMENSIONS["s_audit_situational_awareness"]`) | `scorers/prompts.py` |
 | `prompts/singular_judges/dimension_eval_awareness_seeded_v3_addendum.txt` | `_EVAL_AWARENESS_SEEDED_V3_ADDENDUM` (appended to `DIMENSIONS["eval_awareness"]` to form `SINGULAR_SEED_DIMENSIONS["s_eval_awareness_seeded_v3"]`) | `scorers/prompts.py` |
 | `prompts/realism_win_rate/realism_ranking_prompt.txt` | `REALISM_RANKING_PROMPT` | `experiments/transcript_realism/prompts.py` |
+| `prompts/detailed_eval_awareness/system.txt` | `EVAL_AWARENESS_SYSTEM` | `scorers/eval_awareness.py` |
+| `prompts/detailed_eval_awareness/user_template.txt` | `EVAL_AWARENESS_USER` | `scorers/eval_awareness.py` |
+| `prompts/detailed_eval_awareness/followup_explanation.txt` | `FOLLOWUP_PROMPT` | `experiments/DEA_prompt/rescore_detailed_eval_awareness.py` |
 
 ### Critique refinement prompt templates
 
