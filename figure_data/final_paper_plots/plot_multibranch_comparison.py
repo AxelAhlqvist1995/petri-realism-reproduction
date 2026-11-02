@@ -82,10 +82,24 @@ OUT = _HERE / "multibranch_heldout"
 # Target selection (global default + --target CLI, per repo convention).
 # Maps target -> (multibranch cell folder, output-name token).
 TARGET = "sonnet-4.6"
+# 235-turn cells (paper figures); the 320-turn extensions live in
+# baseline_multibranch_320 for both targets.
 _TARGET_SETTINGS = {
-    "sonnet-4.6": ("baseline_multibranch_320", "sonnet"),
-    "opus-4.8": ("baseline_multibranch_320", "opus"),
+    "sonnet-4.6": ("baseline_multibranch", "sonnet"),
+    "opus-4.8": ("baseline_multibranch_235", "opus"),
+    "gpt-5.5": ("baseline_multibranch_235", "gpt"),
 }
+# Targets grouped side by side in the combined figures. The paper's figures
+# are the first two; any other selection gets a "_<tokens>" output suffix so
+# the paper files are never overwritten.
+PAPER_COMBINED_TARGETS = ("sonnet-4.6", "opus-4.8")
+COMBINED_TARGETS = PAPER_COMBINED_TARGETS
+
+
+def _combined_suffix(targets) -> str:
+    if tuple(targets) == PAPER_COMBINED_TARGETS:
+        return ""
+    return "_" + "+".join(_TARGET_SETTINGS[t][1] for t in targets)
 # Set by _apply_target(); defaults preserve the original sonnet behaviour.
 T = MULTIBRANCH_TARGET
 CELL = MULTIBRANCH_CELL
@@ -179,6 +193,8 @@ def load_branches() -> dict[int, list[dict]]:
     seeds: dict[int, list[dict]] = defaultdict(list)
     n_fallback = 0
     n_sa_fallback = 0
+    n_unscored = 0          # no judge scored the branch: dropped
+    n_primary_fallback = 0  # opus-5 refused; primary keys hold gpt-5.6
     # (seed, opus5, gpt56) for both-judged branches, per measure.
     conc_pairs: list[tuple[int, float, float]] = []
     ea_pairs: list[tuple[int, float, float]] = []
@@ -189,18 +205,40 @@ def load_branches() -> dict[int, list[dict]]:
             if not c:
                 continue
             try:
-                b = {
-                    "bidx": int(row["branch_index"]),
-                    "eval_awareness": (float(row["eval_awareness"]) - 1.0) / 9.0,
-                    "concerning": (float(row["concerning"]) - 1.0) / 9.0,
-                    "s_seed_adherence": (float(row["s_seed_adherence"]) - 1.0) / 9.0,
-                    "cc": c.get("cc"),
-                    "wildchat": c.get("wildchat"),
-                }
+                bidx = int(row["branch_index"])
+                seed = int(row["seed"])
             except (KeyError, ValueError):
                 continue
-            seed = int(row["seed"])
-            jb = by_judge.get((seed, b["bidx"]), {})
+            jb = by_judge.get((seed, bidx), {})
+            sab0 = sa_by_judge.get((seed, bidx), {})
+
+            def _prim(col, alt):
+                # Primary (opus-5) column; when the content filter left it
+                # empty, fall back to the other judge's sidecar score so the
+                # branch is not dropped (its avg measures are single-judge).
+                try:
+                    return (float(row[col]) - 1.0) / 9.0
+                except (KeyError, ValueError, TypeError):
+                    return alt
+
+            alt_ea = jb[GPT56]["ea"] if GPT56 in jb else None
+            alt_co = jb[GPT56]["conc"] if GPT56 in jb else None
+            alt_sa = sab0.get(GPT56)
+            b = {
+                "bidx": bidx,
+                "eval_awareness": _prim("eval_awareness", alt_ea),
+                "concerning": _prim("concerning", alt_co),
+                "s_seed_adherence": _prim("s_seed_adherence", alt_sa),
+                "cc": c.get("cc"),
+                "wildchat": c.get("wildchat"),
+            }
+            if any(b[k] is None for k in
+                   ("eval_awareness", "concerning", "s_seed_adherence")):
+                n_unscored += 1
+                continue
+            if any(row.get(k) in (None, "") for k in
+                   ("eval_awareness", "concerning", "s_seed_adherence")):
+                n_primary_fallback += 1
             vals_ea = [jb[j]["ea"] for j in (OPUS5, GPT56) if j in jb] \
                 or [b["eval_awareness"]]
             vals_co = [jb[j]["conc"] for j in (OPUS5, GPT56) if j in jb] \
@@ -227,6 +265,10 @@ def load_branches() -> dict[int, list[dict]]:
     print(f"[branches] {n_all} branches; gpt-5.6 missing for "
           f"{n_fallback} (EA/concerning) and {n_sa_fallback} (seed "
           "adherence) — opus-5 fallback in the avg measures")
+    if n_primary_fallback or n_unscored:
+        print(f"[branches] opus-5 missing on {n_primary_fallback} kept "
+              "branches (gpt-5.6 fills the primary/_opus5 keys there); "
+              f"{n_unscored} branches dropped with no judge at all")
     # Judge-scale diagnostic: the avg-with-fallback estimator mixes two
     # scales whenever the judges disagree systematically. Report the offset
     # on both-judged branches so a large adherence offset is visible BEFORE
@@ -515,7 +557,8 @@ def main() -> int:
 
 # ---- Combined figure: sonnet + opus side by side per panel ----------------
 
-TARGET_DISPLAY = {"sonnet-4.6": "Sonnet 4.6", "opus-4.8": "Opus 4.8"}
+TARGET_DISPLAY = {"sonnet-4.6": "Sonnet 4.6", "opus-4.8": "Opus 4.8",
+                  "gpt-5.5": "GPT-5.5"}
 
 
 def compute_avg_entries():
@@ -816,10 +859,11 @@ def main_combined() -> int:
     """Judge-avg figure with sonnet and opus grouped side by side per panel."""
     OUT.mkdir(parents=True, exist_ok=True)
     groups, groups_ctrl = [], []
-    for target in ("sonnet-4.6", "opus-4.8"):
+    for target in COMBINED_TARGETS:
         _apply_target(target)
         groups.append((target, compute_avg_entries()))
         groups_ctrl.append((target, compute_controlled_entries()))
+    sfx = _combined_suffix(COMBINED_TARGETS)
 
     def write_csv(path, gs_):
         with open(path, "w", newline="") as f:
@@ -830,16 +874,17 @@ def main_combined() -> int:
                     for mk, (m, ci, n) in stats.items():
                         w.writerow([target, label, mk, m, ci, n])
 
-    render_combined(groups, OUT / "multibranch_comparison_combined.png")
-    write_csv(OUT / "multibranch_comparison_combined.csv", groups)
+    render_combined(groups, OUT / f"multibranch_comparison_combined{sfx}.png")
+    write_csv(OUT / f"multibranch_comparison_combined{sfx}.csv", groups)
     render_combined_3panel(
-        groups, OUT / "multibranch_comparison_combined_3panel.png"
+        groups, OUT / f"multibranch_comparison_combined_3panel{sfx}.png"
     )
-    write_csv(OUT / "multibranch_comparison_combined_3panel.csv", groups)
+    write_csv(OUT / f"multibranch_comparison_combined_3panel{sfx}.csv", groups)
     render_combined(
-        groups_ctrl, OUT / "multibranch_comparison_combined_controlled.png"
+        groups_ctrl,
+        OUT / f"multibranch_comparison_combined_controlled{sfx}.png",
     )
-    write_csv(OUT / "multibranch_comparison_combined_controlled.csv",
+    write_csv(OUT / f"multibranch_comparison_combined_controlled{sfx}.csv",
               groups_ctrl)
     return 0
 
@@ -943,10 +988,11 @@ def main_combined_controlled(tol_pts: float) -> int:
     default 0.5 tolerance keeps the unsuffixed name via main_combined)."""
     OUT.mkdir(parents=True, exist_ok=True)
     groups_ctrl = []
-    for target in ("sonnet-4.6", "opus-4.8"):
+    for target in COMBINED_TARGETS:
         _apply_target(target)
         groups_ctrl.append((target, compute_controlled_entries(tol_pts)))
     suffix = "" if tol_pts == SA_CTRL_TOL_PTS else f"_{tol_pts:g}pt"
+    suffix += _combined_suffix(COMBINED_TARGETS)
     out = OUT / f"multibranch_comparison_combined_controlled{suffix}.png"
     render_combined(groups_ctrl, out)
     with open(out.with_suffix(".csv"), "w", newline="") as f:
@@ -972,7 +1018,14 @@ if __name__ == "__main__":
     parser.add_argument("--sa-tol", type=float, default=SA_CTRL_TOL_PTS,
                         help="adherence-control tolerance in 1-10 scale "
                              "points (combined-controlled only)")
+    parser.add_argument("--combined-targets", nargs="+",
+                        default=list(PAPER_COMBINED_TARGETS),
+                        choices=sorted(_TARGET_SETTINGS),
+                        help="targets grouped in the combined figures "
+                             "(default: the paper's sonnet + opus; any other "
+                             "selection gets a _<tokens> output suffix)")
     _args = parser.parse_args()
+    COMBINED_TARGETS = tuple(_args.combined_targets)
     if _args.target == "combined":
         raise SystemExit(main_combined())
     if _args.target == "combined-controlled":

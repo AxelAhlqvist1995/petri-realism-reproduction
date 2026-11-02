@@ -12,6 +12,9 @@ Baselines callout sits above the topmost (haiku) baseline dot. Costs are
 the ANALYTICAL model (app:cost-model), normalised per
 target by that target's baseline. Judge panels read each cell's
 `0_transcripts.csv` (opus-5 primary judge; the only judge on these cells).
+Eval awareness is the SINGULAR judge column `s_eval_awareness` (the paper's
+verbalized-EA measure, matching the main-text figures); `--ea holistic`
+swaps in the full judge's holistic `eval_awareness` (`*_holisticEA.*`).
 
 Everything lands in `scaling_all_targets_logprob/`:
 
@@ -116,8 +119,24 @@ def _subset_filter(fn):
     return wrapped
 
 
+# Eval-awareness panel: the SINGULAR judge column `s_eval_awareness` (the
+# paper's verbalized-EA measure, as in the main-text figures) by default;
+# `--ea holistic` reads the full judge's holistic `eval_awareness` instead
+# (outputs suffixed `_holisticEA`). The base grid names the panel
+# "eval_awareness" and normalises it (raw-1)/9 either way.
+EA_MEASURE = {"singular": "s_eval_awareness", "holistic": "eval_awareness"}
+_EA_MODE = "singular"
+_RAW_SCORE_BY_SEED = base.score_by_seed
+
+
+def _ea_mapped_score_by_seed(cell_dir, key, normalize=False):
+    if key == "eval_awareness":
+        key = EA_MEASURE[_EA_MODE]
+    return _RAW_SCORE_BY_SEED(cell_dir, key, normalize=normalize)
+
+
 base.winrate_by_seed = _subset_filter(base.winrate_by_seed)
-base.score_by_seed = _subset_filter(base.score_by_seed)
+base.score_by_seed = _subset_filter(_ea_mapped_score_by_seed)
 base.cost_by_seed = _subset_filter(lp.analytical_cost_by_seed)
 base.baseline_cost_by_seed = _subset_filter(lp.analytical_cost_by_seed)
 
@@ -198,7 +217,18 @@ LAYOUTS = [
 
 
 def main() -> int:
-    argparse.ArgumentParser(description=__doc__.splitlines()[0]).parse_args()
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument(
+        "--ea", choices=["singular", "holistic"], default="singular",
+        help="eval-awareness measure: singular judge s_eval_awareness (paper "
+             "default) or the full judge's holistic eval_awareness "
+             "(outputs get a _holisticEA suffix)",
+    )
+    args = ap.parse_args()
+    global _EA_MODE
+    _EA_MODE = args.ea
+    easuffix = "" if _EA_MODE == "singular" else "_holisticEA"
+    print(f"[ea] panel measure = {EA_MEASURE[_EA_MODE]}")
 
     shim = lp.build_shim(
         {t: base.TARGET_DEPTH[t] + base.TARGET_COMBO[t] for t in TARGETS}
@@ -226,9 +256,9 @@ def main() -> int:
         for name, ext in moves:
             f = src / f"{name}.{ext}"
             if f.is_file():
-                f.replace(OUT_DIR / f"{name}{laysuffix}.{ext}")
+                f.replace(OUT_DIR / f"{name}{laysuffix}{easuffix}.{ext}")
         shutil.rmtree(src, ignore_errors=True)
-        print(f"[done] -> {OUT_DIR}/plot{laysuffix}.png")
+        print(f"[done] -> {OUT_DIR}/plot{laysuffix}{easuffix}.png")
     shutil.rmtree(TMP_PLOTS, ignore_errors=True)
     return 0
 

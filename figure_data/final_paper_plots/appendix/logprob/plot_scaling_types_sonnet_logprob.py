@@ -9,7 +9,9 @@ monkeypatches): depth (cr1…cr22), breadth (bo2…bo16) and breadth×depth
 symlink tree. The x-axis is the ANALYTICAL cost model (app:cost-model)
 relative to baseline — the old runs' measured cost_logs are too sparse.
 Judge panels read each cell's `0_transcripts.csv` (opus-5 primary judge; the
-only judge on these cells, so no judge versions).
+only judge on these cells, so no judge versions). The 4-panel EA panel is the
+singular judge `s_eval_awareness` (paper measure); `--ea holistic` uses the
+full judge's holistic score instead (`*_holisticEA.*`).
 
 Everything lands in `scaling_types_sonnet_logprob/`:
 
@@ -48,8 +50,33 @@ LAYOUTS = [
 ]
 
 
+EA_MEASURE = {"singular": "s_eval_awareness", "holistic": "eval_awareness"}
+_EA_MODE = "singular"
+
+
 def main() -> int:
-    argparse.ArgumentParser(description=__doc__.splitlines()[0]).parse_args()
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument(
+        "--ea", choices=["singular", "holistic"], default="singular",
+        help="eval-awareness measure for the 4-panel EA panel (singular judge "
+             "s_eval_awareness by default; holistic adds a _holisticEA suffix)",
+    )
+    args = ap.parse_args()
+    global _EA_MODE
+    _EA_MODE = args.ea
+    easuffix = "" if _EA_MODE == "singular" else "_holisticEA"
+
+    # The EA panel is named "eval_awareness" inside the base grid; serve it
+    # from the chosen CSV column (singular judge by default, like the other
+    # paper figures). Normalisation (raw-1)/9 is applied by the base loaders.
+    raw_score_by_seed = base.score_by_seed
+
+    def ea_mapped(cell_dir, key, normalize=False):
+        if key == "eval_awareness":
+            key = EA_MEASURE[_EA_MODE]
+        return raw_score_by_seed(cell_dir, key, normalize=normalize)
+
+    base.score_by_seed = ea_mapped
 
     shim = lp.build_shim({TARGET: SONNET_CONDS})
     base.REPO_ROOT = shim
@@ -75,9 +102,9 @@ def main() -> int:
         for name, ext in (("plot", "png"), ("summary", "csv"), ("config", "json")):
             f = src / f"{name}.{ext}"
             if f.is_file():
-                f.replace(OUT_DIR / f"{name}{laysuffix}.{ext}")
+                f.replace(OUT_DIR / f"{name}{laysuffix}{easuffix}.{ext}")
         shutil.rmtree(src, ignore_errors=True)
-        print(f"[done] -> {OUT_DIR}/plot{laysuffix}.png")
+        print(f"[done] -> {OUT_DIR}/plot{laysuffix}{easuffix}.png")
     shutil.rmtree(TMP_PLOTS, ignore_errors=True)
     return 0
 

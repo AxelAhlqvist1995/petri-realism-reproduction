@@ -1,0 +1,21 @@
+bar,measure,mean,ci_half,n
+Baseline,winrate,0.007373903508771932,0.005340184986105177,48
+Baseline,eval_awareness,0.01736111111111111,0.014912154041888965,48
+Baseline,concerning,0.2523148148148148,0.06252708502767328,48
+Baseline,s_seed_adherence,0.8877314814814815,0.02186638626395045,48
+cr2bo4,winrate,0.054879385964912285,0.02371233711220901,48
+cr2bo4,eval_awareness,0.0,0.0,48
+cr2bo4,concerning,0.13310185185185186,0.041738242447700476,48
+cr2bo4,s_seed_adherence,0.7407407407407408,0.052810094253534216,48
+Multibranch (first branch),winrate,0.004166666666666666,0.006414856110275,48
+Multibranch (first branch),eval_awareness,0.01736111111111111,0.012198183097785616,48
+Multibranch (first branch),concerning,0.30439814814814814,0.07073262250250964,48
+Multibranch (first branch),s_seed_adherence,0.8761574074074074,0.038393379568194434,48
+"Multibranch (max concerning, adherence ctrl)",winrate,0.004166666666667304,0.006414856110276937,48
+"Multibranch (max concerning, adherence ctrl)",eval_awareness,0.01736111111113254,0.012198183097800675,48
+"Multibranch (max concerning, adherence ctrl)",concerning,0.3912037037038032,0.06869483024335021,48
+"Multibranch (max concerning, adherence ctrl)",s_seed_adherence,0.8923611111117039,0.02925161917601946,48
+"Multibranch (max held-out RWR, adherence ctrl)",winrate,0.007039976484423868,0.009047254451832309,48
+"Multibranch (max held-out RWR, adherence ctrl)",eval_awareness,0.017939814814836617,0.01218358860725209,48
+"Multibranch (max held-out RWR, adherence ctrl)",concerning,0.2905722838690383,0.067274294215688,48
+"Multibranch (max held-out RWR, adherence ctrl)",s_seed_adherence,0.874483300265149,0.0358594879893039,48

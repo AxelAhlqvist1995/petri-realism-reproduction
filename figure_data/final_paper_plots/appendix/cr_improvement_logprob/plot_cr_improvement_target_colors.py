@@ -86,6 +86,33 @@ EXCLUDE_SEEDS: dict[str, set[int]] = {
     "opus-4.7": _PREFILL_ONLY,
 }
 
+# Restrict every target to the seed instructions of the PAIRWISE main-text
+# experiments (149 ids, read from the pairwise baseline cell's config) — the
+# logprob cells were run on a few additional seeds that the pairwise cells
+# never saw. Haiku additionally keeps the prefill-only seeds (partial
+# prefill is enabled there).
+_PAIRWISE_CONFIG = (
+    _HERE.parents[4] / "outputs" / "reasoning" / "baseline"
+    / "target_sonnet-4.6" / "auditor_sonnet-4.6" / "config.yaml"
+)
+
+
+def _pairwise_seed_ids() -> set[int]:
+    import yaml
+
+    cfg = yaml.safe_load(open(_PAIRWISE_CONFIG))
+    return {int(x) for x in cfg["seed_instruction_ids"]}
+
+
+_PAIRWISE_IDS = _pairwise_seed_ids()
+
+
+def _allowed_seeds(target: str) -> set[int]:
+    allowed = set(_PAIRWISE_IDS)
+    if target == "haiku-4.5":
+        allowed |= _PREFILL_ONLY
+    return allowed
+
 SEED_DATASETS = _crs.SEED_DATASETS
 SEED_DATASET: str | None = "filtered"
 
@@ -568,6 +595,9 @@ def main() -> None:
             print(
                 f"  → {t} after '{SEED_DATASET}' dataset filter: {len(inter)} / {before} seeds"
             )
+        before = len(inter)
+        inter = inter & _allowed_seeds(t)
+        print(f"  → {t} after pairwise-seed restriction: {len(inter)} / {before} seeds")
         per_target_allowed[t] = inter
     print()
 
@@ -610,6 +640,7 @@ def main() -> None:
             inter = inter - EXCLUDE_SEEDS.get(t, set())
             if SEED_DATASET is not None:
                 inter = inter & SEED_DATASETS[SEED_DATASET]
+            inter = inter & _allowed_seeds(t)
             per_measure_target_allowed[column][t] = inter
             print(f"  {display:<24} {t}: {len(inter)} seeds")
     print()

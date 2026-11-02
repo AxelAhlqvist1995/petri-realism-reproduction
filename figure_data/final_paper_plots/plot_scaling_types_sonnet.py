@@ -73,6 +73,10 @@ TMP_PLOTS = HERE / "plots"
 VERSIONS = ["avg", "opus5", "gpt56"]
 
 JUDGE_KEYS = ["eval_awareness", "concerning", "s_seed_adherence"]
+# EA panel (4-panel layout only): singular judge by default, like the other
+# paper figures; `--ea holistic` uses the full judge's holistic score.
+EA_MEASURE = {"singular": "s_eval_awareness", "holistic": "eval_awareness"}
+_EA_MODE = "singular"
 
 # (layout suffix, panel keys or None for all)
 LAYOUTS = [
@@ -182,12 +186,14 @@ def run_version(version: str, scores: dict) -> int:
 
     _CUR_VIEWS = {}
     for key in JUDGE_KEYS:
-        view, tag = js.version_view(target_data, folders, key, version)
+        measure = EA_MEASURE[_EA_MODE] if key == "eval_awareness" else key
+        view, tag = js.version_view(target_data, folders, measure, version)
         _CUR_VIEWS[key] = view
         if tag == "opus5-fallback" and version != "opus5":
             print(f"[note] {version}: no gpt-5.6 scores for '{key}' — using opus-5.")
 
     vsuffix = "" if version == "avg" else f"_{version}"
+    vsuffix += "" if _EA_MODE == "singular" else "_holisticEA"
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     for laysuffix, panel_filter in LAYOUTS:
         _PANEL_FILTER = panel_filter
@@ -211,7 +217,14 @@ def main() -> int:
     ap.add_argument(
         "--refresh-scores", action="store_true", help="re-extract judge_scores.json"
     )
+    ap.add_argument(
+        "--ea", choices=["singular", "holistic"], default="singular",
+        help="eval-awareness measure for the 4-panel EA panel (singular judge "
+             "s_eval_awareness by default; holistic adds a _holisticEA suffix)",
+    )
     args = ap.parse_args()
+    global _EA_MODE
+    _EA_MODE = args.ea
 
     scores = js.load(refresh=args.refresh_scores)
     for version in VERSIONS if args.judge == "all" else [args.judge]:

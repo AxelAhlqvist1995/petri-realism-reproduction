@@ -18,8 +18,18 @@ judging is preserved in `judge_output_history` / the per-judge store).
 
 - **Judge measures** (`concerning`, `eval_awareness`, `s_eval_awareness`,
   `s_seed_adherence`): each cell's `0_transcripts.csv` — opus-5 is the primary
-  judge and the ONLY judge on these cells, so unlike the main figures there
-  are no `--judge` versions.
+  judge and the ONLY judge on these cells (no gpt-5.6 singular pass), so
+  unlike the main figures there are no `--judge` versions.
+- **Eval awareness** in every figure here is the SINGULAR judge column
+  `s_eval_awareness` (the paper's verbalized-EA measure, as in the main-text
+  figures). The two scaling scripts take `--ea holistic` to plot the full
+  judge's holistic `eval_awareness` instead (outputs suffixed
+  `_holisticEA`). Until 2026-10-27 the scaling figures silently used the
+  holistic score, and the paper's appendix bar figure came from
+  `../cr_improvement_logprob/` which plots the OLD per-message `Has_EA`
+  detector — both now replaced in the paper by the figures here.
+- Run the two scaling scripts one after the other, never in parallel: they
+  share and rebuild the `.shim/` symlink tree.
 - **Realism win rate**: `realism_win_rate/summary.json` per cell (wildchat+cc
   mean via the shared loader). Judge-independent.
 - **Cost axis**: the ANALYTICAL cost model

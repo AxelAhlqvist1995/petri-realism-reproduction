@@ -60,8 +60,9 @@ FIG_SIZE = (16, 6.1)
 DPI = 200
 YLABEL_FONTSIZE = 19
 
-# Point the shared pooling/CSV machinery at the logprob cells.
-mcb.TARGETS = list(lp.TARGETS)
+# Point the shared pooling/CSV machinery at the logprob cells. Targets in
+# the order the appendix text discusses them (and the scaling-figure legend).
+mcb.TARGETS = ["haiku-4.5", "sonnet-4.6", "opus-4.7"]
 mcb.TARGET_DISPLAY = dict(lp.TARGET_DISPLAY)
 mcb.CONDITIONS = CONDITIONS
 

@@ -1,21 +1,31 @@
 target,quantity,value
 sonnet-4.6,n_splits,63504
-sonnet-4.6,heldout_mean,0.16745044119205588
-sonnet-4.6,heldout_std,0.013307775932229574
-sonnet-4.6,heldout_min,0.10476190476190475
-sonnet-4.6,heldout_max,0.21428571428571427
-sonnet-4.6,Baseline,0.09404761904761905
-sonnet-4.6,cr2bo4,0.28154761904761905
-sonnet-4.6,Multibranch (optimize RWR),0.25357142857142856
-sonnet-4.6,Multibranch (first branch),0.12380952380952379
-sonnet-4.6,Multibranch (held-out RWR),0.16745044119205352
+sonnet-4.6,heldout_mean,0.17581588143571864
+sonnet-4.6,heldout_std,0.012685919138651313
+sonnet-4.6,heldout_min,0.12448979591836734
+sonnet-4.6,heldout_max,0.22244897959183674
+sonnet-4.6,Baseline,0.08928571428571429
+sonnet-4.6,cr2bo4,0.2780612244897959
+sonnet-4.6,Multibranch (optimize RWR),0.25816326530612244
+sonnet-4.6,Multibranch (first branch),0.136734693877551
+sonnet-4.6,Multibranch (held-out RWR),0.17581588143571453
 opus-4.8,n_splits,63504
-opus-4.8,heldout_mean,0.019010945021283365
-opus-4.8,heldout_std,0.005698139343113204
+opus-4.8,heldout_mean,0.015690350214159737
+opus-4.8,heldout_std,0.004649111618152255
 opus-4.8,heldout_min,0.0
-opus-4.8,heldout_max,0.042105263157894736
-opus-4.8,Baseline,0.017763157894736845
-opus-4.8,cr2bo4,0.057236842105263155
-opus-4.8,Multibranch (optimize RWR),0.05146198830409356
-opus-4.8,Multibranch (first branch),0.006578947368421051
-opus-4.8,Multibranch (held-out RWR),0.019010945021283907
+opus-4.8,heldout_max,0.034782608695652174
+opus-4.8,Baseline,0.02010869565217392
+opus-4.8,cr2bo4,0.05760869565217392
+opus-4.8,Multibranch (optimize RWR),0.04577294685990337
+opus-4.8,Multibranch (first branch),0.005434782608695651
+opus-4.8,Multibranch (held-out RWR),0.015690350214160254
+gpt-5.5,n_splits,63504
+gpt-5.5,heldout_mean,0.011779572940287225
+gpt-5.5,heldout_std,0.0030925735428111627
+gpt-5.5,heldout_min,0.0
+gpt-5.5,heldout_max,0.020833333333333332
+gpt-5.5,Baseline,0.007373903508771932
+gpt-5.5,cr2bo4,0.054879385964912285
+gpt-5.5,Multibranch (optimize RWR),0.02708333333333333
+gpt-5.5,Multibranch (first branch),0.004166666666666666
+gpt-5.5,Multibranch (held-out RWR),0.011779572940285246

@@ -2,8 +2,9 @@
 """Sensitivity histogram (cv_sensitivity_full_grid) side by side per target.
 
 Same figure as plot_multibranch_cv_sensitivity.py, twice: left panel target
-sonnet-4.6 (cell baseline_multibranch_320), right panel target opus-4.8
-(cell baseline_multibranch_320). Each panel is self-contained (its own seed set,
+sonnet-4.6 (cell baseline_multibranch, 235 turns), right panel target
+opus-4.8 (cell baseline_multibranch_235), third panel target gpt-5.5
+(cell baseline_multibranch_235). Each panel is self-contained (its own seed set,
 x-range and inline strategy lines) because the two targets live on very
 different win-rate scales.
 
@@ -36,13 +37,16 @@ OUT = _HERE / "multibranch_heldout"
 DPI = 200
 
 _PAIRWISE_ROOT = _mo.MULTIBRANCH_CELL.parents[2]
-TARGETS = [  # (target, display, multibranch cell) — the 320-turn runs
+TARGETS = [  # (target, display, multibranch cell) — the 235-turn runs
     ("sonnet-4.6", "Sonnet 4.6",
      _PAIRWISE_ROOT / "target_sonnet-4.6" / "auditor_sonnet-4.6"
-     / "baseline_multibranch_320"),
+     / "baseline_multibranch"),
     ("opus-4.8", "Opus 4.8",
      _PAIRWISE_ROOT / "target_opus-4.8" / "auditor_sonnet-4.6"
-     / "baseline_multibranch_320"),
+     / "baseline_multibranch_235"),
+    ("gpt-5.5", "GPT-5.5",
+     _PAIRWISE_ROOT / "target_gpt-5.5" / "auditor_sonnet-4.6"
+     / "baseline_multibranch_235"),
 ]
 
 INLINE = {
@@ -65,7 +69,7 @@ def main() -> int:
 
     results = [(t, disp, *hist_for_target(t, cell)) for t, disp, cell in TARGETS]
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5.5))
+    fig, axes = plt.subplots(1, len(results), figsize=(7 * len(results), 5.5))
     fig.patch.set_facecolor("white")
     for ax, (target, display, dist, lines) in zip(axes, results):
         ax.set_facecolor("#f0f0f0")

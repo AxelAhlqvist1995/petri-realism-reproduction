@@ -23,10 +23,12 @@ Judge-dependent panels are served from `judge_scores.py` views with the
 fairness rule: per target and measure, a seed only counts if the serving
 judge scored it for EVERY rung (baseline, cr1, cr2, cr2bo2, cr2bo4); `avg`
 averages the two judges where both are complete on a seed and falls back to
-the single complete judge otherwise. `eval_awareness` / `concerning` are
-FULL-judge measures with no gpt-5.6 pass on cr1/cr2/cr2bo2 for the non-sonnet
-targets, so those panels fall back to opus-5 there in the gpt56/avg versions
-(notes printed per run). Win rate / cost / Has_EA are judge-independent.
+the single complete judge otherwise. The eval-awareness panel is the
+SINGULAR judge `s_eval_awareness` (the paper's verbalized-EA measure, as in
+the cr_comparison bars); `--ea holistic` swaps in the full judge's holistic
+`eval_awareness` (outputs suffixed `_holisticEA`). `concerning` (and holistic
+EA) are FULL-judge measures; where a judge has no full pass the panel falls
+back to opus-5 (notes printed per run). Win rate / cost / Has_EA are judge-independent.
 
 Loading/rendering reuses
 `cost_winrate_reasoning/plot_cost_grid_combined_targets.py` (its imported
@@ -55,6 +57,13 @@ VERSIONS = ["avg", "opus5", "gpt56"]
 
 JUDGE_KEYS = ["eval_awareness", "concerning", "s_seed_adherence"]
 FOLDERS = ["baseline", "cr1", "cr2", "cr2bo2", "cr2bo4"]
+
+# The "Eval awareness" panel is served from the SINGULAR judge
+# (`s_eval_awareness`, the paper's verbalized-EA measure, same as the
+# cr_comparison bars) by default; `--ea holistic` instead uses the full
+# judge's holistic `eval_awareness` and writes `*_holisticEA.png`.
+EA_MEASURE = {"singular": "s_eval_awareness", "holistic": "eval_awareness"}
+_EA_MODE = "singular"
 
 # (layout suffix, panel keys or None for all four)
 LAYOUTS = [
@@ -156,7 +165,8 @@ def run_version(version: str, scores: dict) -> int:
         target_data = scores.get(target, {})
         _CUR_VIEWS[target] = {}
         for key in JUDGE_KEYS:
-            view, tag = js.version_view(target_data, FOLDERS, key, version)
+            measure = EA_MEASURE[_EA_MODE] if key == "eval_awareness" else key
+            view, tag = js.version_view(target_data, FOLDERS, measure, version)
             _CUR_VIEWS[target][key] = view
             if tag == "opus5-fallback" and version != "opus5":
                 print(
@@ -165,6 +175,7 @@ def run_version(version: str, scores: dict) -> int:
                 )
 
     vsuffix = "" if version == "avg" else f"_{version}"
+    vsuffix += "" if _EA_MODE == "singular" else "_holisticEA"
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     base.PLOTS_ROOT = TMP_PLOTS  # module-level global read inside base.main()
     for laysuffix, panel_filter in LAYOUTS:
@@ -199,11 +210,19 @@ def main() -> int:
     ap.add_argument(
         "--refresh-scores", action="store_true", help="re-extract judge_scores.json"
     )
+    ap.add_argument(
+        "--ea", choices=["singular", "holistic"], default="singular",
+        help="eval-awareness measure for the EA panel: singular judge "
+             "(s_eval_awareness, paper default) or the full judge's holistic "
+             "eval_awareness (outputs get a _holisticEA suffix)",
+    )
     args = ap.parse_args()
+    global _EA_MODE
+    _EA_MODE = args.ea
 
     scores = js.load(refresh=args.refresh_scores)
     for version in VERSIONS if args.judge == "all" else [args.judge]:
-        print(f"\n=== version: {version} ===")
+        print(f"\n=== version: {version} (EA = {EA_MEASURE[_EA_MODE]}) ===")
         rc = run_version(version, scores)
         if rc != 0:
             return rc

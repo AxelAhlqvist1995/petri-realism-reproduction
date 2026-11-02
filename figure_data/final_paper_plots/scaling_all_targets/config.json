@@ -1,5 +1,5 @@
 {
-  "generated_at": "20260828_214739",
+  "generated_at": "20261027_155108",
   "auditor": "sonnet-4.6",
   "targets": [
     "opus-4.8",
@@ -70,7 +70,7 @@
   ],
   "n_cost_common": {
     "opus-4.8": 50,
-    "gpt-5.5": 50,
+    "gpt-5.5": 42,
     "gemini-3.5-flash": 50,
     "sonnet-4.6": 50
   },

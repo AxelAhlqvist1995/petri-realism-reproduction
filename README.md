@@ -50,7 +50,9 @@ the full 40-dimension rubric (paper appendix "Prompts for measures"):
 ### `prompts/critique_refinement/`
 
 The prompt templates of the critique refinement / best-of-N protocol (paper appendices
-"Preference prompt", "Critique and refine", "Auditor context between rounds"). In the fork
+"Preference prompt" and "Critique refinement implementation details", whose subsections
+"Feedback prompt (feedback model)" and "Auditor context on receiving feedback" print the
+feedback and auditor-context templates). In the fork
 these are `.txt` templates loaded by name; the roles they play are bound in
 `config/defaults.yaml`.
 
@@ -71,12 +73,15 @@ these are `.txt` templates loaded by name; the roles they play are bound in
 
 ### `prompts/auditor_behavior_judge/`
 
-The gpt-5.5 auditor-behavior judge (paper appendix "Auditor behavior judge prompt"): rates
+The auditor-behavior judge (paper appendix "Auditor-behavior judge prompt"): rates
 eight audit characteristics (harmful_intent, scenario_detail, pressure_to_take_action,
 audit_buildup, audit_success, auditor_persistence_adaptation, action_affordances,
 system_prompt_pressure) on auditor-created content only. `system.txt` is the judge prompt,
-`user_template.txt` the per-audit message. Transcribed from the paper appendix; see
-`SOURCES.md`.
+`user_template.txt` the per-audit message. In the paper's final figure the prompt is run
+with Opus 5 and GPT-5.6 Sol (reasoning effort high) and the two ratings are averaged; the
+per-judge shift summaries are in
+`figure_data/final_paper_plots/appendix/concerning_subdims/auditor_behavior/`. Transcribed
+from the paper appendix; see `SOURCES.md`.
 
 ### `prompts/detailed_eval_awareness/`
 
@@ -87,7 +92,8 @@ context. `system.txt` is the classifier prompt, `user_template.txt` the per-mess
 (`{seed_instruction}`, `{context_xml}`, `{message_xml}` placeholders), and
 `followup_explanation.txt` the follow-up sent when a response is scored 1 to elicit a brief
 justification. These per-turn labels underlie turn-level EA statistics such as EA-% and
-time-to-first-EA.
+time-to-first-EA, which were used during development but do not appear in the paper's
+final figures; the prompts are kept for completeness.
 
 ### `prompts/environment_realism/`
 
@@ -110,12 +116,20 @@ auditor token settings, and the prompt-name bindings for the critique refinement
 ### `figure_data/final_paper_plots/`
 
 The plotting scripts, numeric summary CSVs, and per-seed judge scores
-(`judge_scores.json`, extracted by `judge_scores.py`) behind the paper's figures, including
-its README documenting judge versions and the strict-subset fairness rule. PNGs are omitted
-(regenerable); the scripts read the full experiment outputs, which are not distributed, so
-they serve as provenance rather than standalone runnable code. Two data files were withheld:
-one JSON containing verbatim transcript excerpts and one CSV of per-transcript human
-annotations.
+(`judge_scores.json`, extracted by `judge_scores.py`) behind the paper's critique
+refinement, scaling, multibranch, judge-validation, and concerning-analysis figures,
+including its README documenting judge versions and the strict-subset fairness rule.
+Refreshed 2026-11-02 to match the final version of the paper: the scaling figures now
+report the singular-judge eval-awareness measure, the multibranch comparison includes the
+GPT-5.5 target, `concerning_distributions/` holds the concerning score distributions, and
+`appendix/concerning_subdims/` holds the misaligned-behavior sub-dimension analysis (grouped
+behavior figures, per-target dimension shifts, and the Opus 5 + GPT-5.6 Sol auditor-behavior
+rejudge). PNGs/PDFs are omitted (regenerable); the scripts read the full experiment outputs,
+which are not distributed, so they serve as provenance rather than standalone runnable code.
+Four data files were withheld: one JSON of verbatim transcript excerpts, one CSV of
+per-transcript human annotations, one JSON of per-transcript judge write-ups, and the raw
+per-transcript auditor-behavior judge responses (see `SOURCES.md`). The DISH coding-audit
+figures come from the separate `petri_dish` codebase and are not included here.
 
 ### `data/wildchat/`
 
