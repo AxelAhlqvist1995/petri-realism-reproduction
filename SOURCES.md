@@ -44,6 +44,22 @@ All files are byte-for-byte copies. Only the paper-relevant subset of each direc
 included (the `_prefill` variants of the preference prompts and the non-paper experimental
 feedback prompts are omitted).
 
+Which template each reported cell used: `config/defaults.yaml` holds the un-overridden
+defaults (`pairwise.feedback_prompt_name: "natural_pairwise"`). Every pairwise cell reported
+in the paper's main text and scaling/multibranch appendices (`outputs/reasoning/pairwise/
+target_*/auditor_sonnet-4.6/*/config.yaml` in the fork) overrides it to
+`natural_pairwise_seed_aware` with the `pairwise_seed_aware_once` auditor-context templates,
+as the paper's "Critique refinement implementation details" appendix states. The one
+exception is the selector-comparison cell of the logprob appendix
+(`ablation_protocol_no_stopping/pairwise/cr4/target_sonnet-4.6`, auditor Opus 4.7), which ran
+with the base `natural_pairwise` template. Note that `natural_pairwise.txt` differs from
+`natural_pairwise_seed_aware.txt` not only by the two seed-adherence sentences the paper
+quotes but also by one capitalisation ("does NOT need" vs "does not need").
+
+The realism-ranking prompt ends in a single `{transcripts}` placeholder; `code/realism_win_rate.py`
+expands it into the two `<transcript_0>…</transcript_0>` / `<transcript_1>…</transcript_1>`
+blocks shown in the paper's "Pairwise realism-ranking prompt" appendix.
+
 ### Prompts transcribed from the paper
 
 Two prompt sets were not preserved in the experiment fork's code tree and are reproduced
@@ -66,7 +82,8 @@ been converted back to literal angle brackets here.
 | `seeds/single_branch_seed_instructions.json` | `SINGLE_BRANCH_SEED_INSTRUCTIONS`, `src/petri/tasks/single_branch_seeds.py` |
 | `seeds/paper_seed_sets.json` | `seed_instruction_ids` from the run configs named in each entry's `source_config`, expanded with `expand_seed_ids` from `experiments/audit/run.py` |
 | `config/defaults.yaml` | `experiments/audit/defaults.yaml` (verbatim) |
-| `figure_data/final_paper_plots/` | `experiments/general_plotting/final_paper_plots/` (fork commit `274906e`, 2026-11-02) minus PNGs/PDFs, caches, `.bak` files, and four withheld data files: `appendix/endsignal/endsignal_concerning.json` (verbatim transcript excerpts), `appendix/ea_judge_vs_human_grids/plots/pairs.csv` (per-transcript human annotations), `appendix/concerning_subdims/judge_texts.json` (per-transcript judge write-ups quoting transcripts), and `appendix/concerning_subdims/auditor_behavior/ratings/*.jsonl` (raw auditor-behavior judge responses; the derived `auditor_behavior_shifts*.csv` summaries are included) |
+| `figure_data/final_paper_plots/` | `experiments/general_plotting/final_paper_plots/` (fork commit `2850ce3`, 2026-11-03) minus PNGs/PDFs, caches, `.bak` files, and four withheld data files (plus the per-transcript human ratings in `dataset/ea_gt_v3/`, which `appendix/ea_human_rated_comparison/plot_human_rated_ea.py` reads; only its aggregate `plots/summary.csv` and `plots/paired_diff.csv` are included): `appendix/endsignal/endsignal_concerning.json` (verbatim transcript excerpts), `appendix/ea_judge_vs_human_grids/plots/pairs.csv` (per-transcript human annotations), `appendix/concerning_subdims/judge_texts.json` (per-transcript judge write-ups quoting transcripts), and `appendix/concerning_subdims/auditor_behavior/ratings/*.jsonl` (raw auditor-behavior judge responses; the derived `auditor_behavior_shifts*.csv` summaries are included) |
+| `figure_data/final_paper_plots/appendix/preference_prompt/` | `experiments/general_plotting/paper/preference_prompt_{ablation,strategies,filters}.py` (verbatim) and their `ablation_data.csv` outputs from `experiments/general_plotting/paper/plots/{paper_2026-05-02_15-20-28,strategies_2026-05-02_15-20-31,filters_2026-05-02_15-20-34}/` (the runs behind the paper's preference-prompt appendix figures; re-running the scripts on 2026-11-03 reproduced them exactly). Placed under `final_paper_plots/appendix/` here although they live one directory up in the fork. |
 | `data/wildchat/wildchat_{harmful,vulnerable,mixed}` | `dataset/realism_win_rate/` in the fork (byte-for-byte; WildChat data, ODC-BY — see `data/wildchat/README.md`) |
 | `code/realism_win_rate.py` | `experiments/transcript_realism/realism_win_rate.py` (verbatim) |
 | `code/openai_safety.py` | `src/petri/openai_safety.py` (verbatim) |

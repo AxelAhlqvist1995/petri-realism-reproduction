@@ -15,6 +15,13 @@ appendix (`app:cr-logprobs`), each the logprob twin of a main-text figure in
 Cells: `outputs/ablation_protocol_no_stopping/<cond>/target_<T>/auditor_opus-4.7`
 (the 30 cells rejudged with claude-opus-5 on 2026-08-27; gpt-5.4's original
 judging is preserved in `judge_output_history` / the per-judge store).
+The `pairwise/cr4/target_sonnet-4.6` cell of `cr4_selector_comparison` was
+re-judged with claude-opus-5 on 2026-11-03 (singular eval awareness and seed
+adherence, full-judge concerning); its earlier gpt-5.4 CSV is snapshotted in
+that cell's `old_judgings/`. Opus 5 hit content filters on 9 of its 51
+transcripts (7 lost every measure, 2 only seed adherence), so after seed
+pooling the per-panel N of that figure is 45 (eval awareness), 43
+(concerning) and 42 (seed adherence) against 50 for realism win rate.
 
 - **Judge measures** (`concerning`, `eval_awareness`, `s_eval_awareness`,
   `s_seed_adherence`): each cell's `0_transcripts.csv` — opus-5 is the primary

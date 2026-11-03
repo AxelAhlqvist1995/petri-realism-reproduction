@@ -1,7 +1,9 @@
 # Reproduction assets for "Improving Evaluation Realism with Inference-Time Compute and Deployment Scaffolds"
 
 Frozen prompts and small reproduction assets for the paper
-*Improving Evaluation Realism with Inference-Time Compute and Deployment Scaffolds*.
+*Improving Evaluation Realism with Inference-Time Compute and Deployment Scaffolds*
+(Axel Ahlqvist, Richard Guan, Juan-Pablo Rivera, Adeline Kassler, Dmitrii Troitskii,
+Alexandra Souly, Kai Fronsdal, Robert Kirk, John Hughes; NeurIPS 2026).
 
 The experiments were run on a fork of [Petri 2](https://alignment.anthropic.com/2026/petri-v2/).
 Because the upstream [Petri](https://github.com/safety-research/petri) repository is a moving
@@ -12,6 +14,8 @@ extracted from.
 The critique refinement / best-of-N protocol itself is released separately as
 [petri-bon](https://github.com/AxelAhlqvist1995/petri-bon), a standalone package that ports the
 paper's protocols to the current Petri release.
+The DISH harness (Deployment-Imitating SWE-Agent Harness) is released as
+[petri_dish](https://github.com/meridianlabs-ai/petri_dish).
 
 ## Contents
 
@@ -119,17 +123,21 @@ The plotting scripts, numeric summary CSVs, and per-seed judge scores
 (`judge_scores.json`, extracted by `judge_scores.py`) behind the paper's critique
 refinement, scaling, multibranch, judge-validation, and concerning-analysis figures,
 including its README documenting judge versions and the strict-subset fairness rule.
-Refreshed 2026-11-02 to match the final version of the paper: the scaling figures now
+Refreshed 2026-11-03 to match the camera-ready version of the paper: the scaling figures
 report the singular-judge eval-awareness measure, the multibranch comparison includes the
-GPT-5.5 target, `concerning_distributions/` holds the concerning score distributions, and
+GPT-5.5 target, `concerning_distributions/` holds the concerning score distributions,
 `appendix/concerning_subdims/` holds the misaligned-behavior sub-dimension analysis (grouped
 behavior figures, per-target dimension shifts, and the Opus 5 + GPT-5.6 Sol auditor-behavior
-rejudge). PNGs/PDFs are omitted (regenerable); the scripts read the full experiment outputs,
+rejudge), `appendix/ea_human_rated_comparison/` holds the baseline-vs-cr2bo4 comparison on
+the human eval-awareness ratings, `appendix/logprob/cr4_selector_comparison/` reflects the
+Opus 5 re-judge of the pairwise cell, and `appendix/preference_prompt/` holds the data behind
+the preference-prompt ablation, strategy and filter figures. PNGs/PDFs are omitted (regenerable); the scripts read the full experiment outputs,
 which are not distributed, so they serve as provenance rather than standalone runnable code.
 Four data files were withheld: one JSON of verbatim transcript excerpts, one CSV of
 per-transcript human annotations, one JSON of per-transcript judge write-ups, and the raw
 per-transcript auditor-behavior judge responses (see `SOURCES.md`). The DISH coding-audit
-figures come from the separate `petri_dish` codebase and are not included here.
+figures come from the separate [`petri_dish`](https://github.com/meridianlabs-ai/petri_dish)
+codebase; their figure data is being added under `figure_data/dish/`.
 
 ### `data/wildchat/`
 
@@ -152,3 +160,9 @@ license so the measure can be reproduced without re-deriving the exact subset. S
 - No datasets or experiment outputs (hundreds of MB in the fork).
 - Not a runnable Petri fork — for running audits, use upstream Petri plus
   [petri-bon](https://github.com/AxelAhlqvist1995/petri-bon).
+
+## License
+
+Code, prompts, seed lists and figure data in this repository are released under the MIT
+license (see `LICENSE`). The WildChat conversations under `data/wildchat/` are redistributed
+under WildChat's ODC-BY license with attribution; see `data/wildchat/README.md`.

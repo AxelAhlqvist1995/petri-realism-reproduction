@@ -47,3 +47,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+The conversations under data/wildchat/ are not covered by the MIT license above. They are
+excerpts of the WildChat-1M dataset (Zhao et al., 2024) and are redistributed under its
+Open Data Commons Attribution License (ODC-BY 1.0); see data/wildchat/README.md for the
+attribution.
