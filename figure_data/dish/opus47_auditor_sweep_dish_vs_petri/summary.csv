@@ -1,0 +1,6 @@
+target,measure,condition,n,mean,ci_half,ci_lower,ci_upper
+opus-4.7,winrate_dish_vs_petri_baseline,dish:auditor_sonnet-4.6_normal_seeds,100,0.45,0.09570598930976548,0.3561437510640346,0.5475557296835656
+opus-4.7,winrate_dish_vs_petri_baseline,dish:auditor_sonnet-4.6_rephrased_seeds,100,0.58,0.09497733541296716,0.4820630799889527,0.672017750814887
+opus-4.7,winrate_dish_vs_petri_baseline,dish:auditor_opus-4.7_normal_seeds,100,0.43,0.09525824651803633,0.3373313900052838,0.5278478830413564
+opus-4.7,winrate_dish_vs_petri_baseline,dish:auditor_opus-4.8_normal_seeds,100,0.72,0.08674326596873683,0.6251178763865427,0.7986044083240164
+opus-4.7,winrate_dish_vs_petri_baseline,dish:auditor_gpt-5.4_normal_seeds,100,0.78,0.08034680105672254,0.6892946528499969,0.849988254963442

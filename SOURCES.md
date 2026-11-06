@@ -88,6 +88,37 @@ been converted back to literal angle brackets here.
 | `code/realism_win_rate.py` | `experiments/transcript_realism/realism_win_rate.py` (verbatim) |
 | `code/openai_safety.py` | `src/petri/openai_safety.py` (verbatim) |
 
+### DISH figure data and seeds
+
+The DISH experiments ran in a separate experiment codebase, not the Petri 2 fork above.
+Paths in this table are relative to that codebase at commit `b84048b`, except the compact
+deployment figure, which is at commit `58b25a7`. Everything needed to read the DISH figures
+is in this repo; the codebase itself is not needed.
+
+Scripts are verbatim copies. Each `summary.csv` was produced in three steps:
+
+1. Re-render the figure with its original script from the listed input data.
+2. Check that the re-rendered PNG is byte-identical to the camera-ready figure.
+3. Capture the drawn bars and error bars into the CSV.
+
+See `figure_data/dish/README.md` for the method and the column definitions.
+
+| Item in this repo | Source (DISH experiment codebase) |
+|---|---|
+| `figure_data/dish/coding_improvement_selected_petri_seeds_realism/` | `experiments/260813_singular_eval_awareness_main_plot/render.py` and its input `coding_improvement_selected_petri_seeds_realism_singular_ea_average_data.json`; drawing helpers `experiments/260608_fixed_main_plot_v2/render_plots.py`, `render_coding_improvement.py` |
+| `figure_data/dish/dish_realism_deployment_compact/` | `experiments/261102_compact_deployment_plot/pipeline.py` and `deployment_data.json` (commit `58b25a7`; the data is a copy of `experiments/260608_fixed_main_plot_v2/dish_realism_deployment_data.json`) |
+| `figure_data/dish/dish_vs_petri/` | `experiments/260611_fixed_main_plot_v2_dish_vs_petri/pipeline.py` and `dish_vs_petri_data.json` (Haiku 4.5 DISH cell from `experiments/260612_haiku45_sonnet46_auditor_special_case/`, cr4 cells from `experiments/260613_deployment_cr4_gap_fill/`) |
+| `figure_data/dish/dish_realism_deployment_cross_product/` | `experiments/260616_deployment_cross_product_pairwise/pipeline.py` and `plots/dish_realism_deployment_cross_product_data.json` |
+| `figure_data/dish/cross_judge_realism_comparison/` | `experiments/260821_cross_judge_realism/pipeline.py` and `cross_judge_realism_data.json` |
+| `figure_data/dish/realism_win_rate_order_comparison/` | `experiments/260604_system_tools_messages_realism_rejudge/render_realism_order_comparison.py`; inputs `system_tools_messages_realism_data.json` (right panel) and `experiments/260529_dish_cr_fix_first_turn/dish_cr_composition_v2_selected_seeds_fix_first_turn_data.json` (left panel) |
+| `figure_data/dish/stripped_realism_grid_fixed_main_plot_v2_with_dish_cr/` | `experiments/260616_stripped_realism_grid_fixed_main_plot_v2/{dish_cr_backfill_pipeline,gemini35_flash_backfill_pipeline,pipeline}.py` and `stripped_realism_grid_fixed_main_plot_v2_with_dish_cr_data.json` |
+| `figure_data/dish/petri_vs_dish_pairwise_24x24_no_haiku/` | `experiments/260626_petri_vs_dish_pairwise_24x24/{render_petri_vs_dish_pairwise_24x24_no_haiku,render_petri_vs_dish_pairwise_24x24,compute_grouped_no_haiku_data}.py` and `petri_vs_dish_pairwise_24x24_grouped_data.json` |
+| `figure_data/dish/opus47_auditor_sweep_{deployment,dish_vs_petri,intransitivity_averaged}/` | `experiments/260612_opus47_benign_seed_auditor_sweep/pipeline.py` and `deployment_data.json`, `dish_vs_petri_data.json` |
+| `figure_data/dish/behavioral_coding_{opus48,opus47,gpt55,sonnet46,gemini35_flash}_dish_cr4/` | `experiments/260814_gpt56_rejudge_consolidated/render_dimensions.py` and `plots/dimension_bars_average.csv` (rows `judge_series=average`, `source_set=coding`) |
+| `figure_data/dish/README.md` | Written for this repo |
+| `seeds/dish_coding_agent_seeds.json` | Originals: `src/petri/tasks/datasets/dish_compatible_seeds.csv`. Rephrases: `experiments/260605_dish_cr_pipeline_rephrased_seeds/dish_compatible_seeds_rephrased.csv`. Checked byte-for-byte against the seed instruction recorded in each coding audit log behind the figures. |
+| `seeds/paper_seed_sets.json` (`dish_coding_24`, `dish_coding_original_12`) | The same two CSVs; seed positions as used by the coding-figure render scripts |
+
 ## How the full judge prompt was assembled
 
 The full rubric judge prompt (used for the paper's *concerning* score) is not stored

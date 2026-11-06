@@ -109,8 +109,10 @@ the pairwise real-vs-simulated-environment prompt. Transcribed from the paper ap
 ### `seeds/`
 
 The seed instruction lists and the exact seed ID sets behind each experiment cell
-(main-text 149, logprob-appendix 157, random subset 54/50, unrealistic 13). Contains the
-upstream Petri benchmark canary GUID — see `seeds/README.md`.
+(main-text 149, logprob-appendix 157, random subset 54/50, unrealistic 13, and the DISH
+coding-agent sets of 24 and 12). `dish_coding_agent_seeds.json` holds the 12 DISH coding-agent
+seed instructions and their 12 rephrases exactly as run. Contains the upstream Petri benchmark
+canary GUID — see `seeds/README.md`.
 
 ### `config/defaults.yaml`
 
@@ -135,9 +137,29 @@ the preference-prompt ablation, strategy and filter figures. PNGs/PDFs are omitt
 which are not distributed, so they serve as provenance rather than standalone runnable code.
 Four data files were withheld: one JSON of verbatim transcript excerpts, one CSV of
 per-transcript human annotations, one JSON of per-transcript judge write-ups, and the raw
-per-transcript auditor-behavior judge responses (see `SOURCES.md`). The DISH coding-audit
-figures come from the separate [`petri_dish`](https://github.com/meridianlabs-ai/petri_dish)
-codebase; their figure data is being added under `figure_data/dish/`.
+per-transcript auditor-behavior judge responses (see `SOURCES.md`).
+
+### DISH figure data
+
+`figure_data/dish/` has one folder for each of the paper's 16 DISH figures, named after the
+figure's file stem in the paper source. Each folder holds `summary.csv` (one row per plotted
+bar, with the plotted mean and error-bar ends) and the script that drew the figure. The
+figures are:
+
+- coding-setting results;
+- deployment task re-creations: matched, direct DISH/cr4 vs Petri, and cross-product;
+- judge-model and transcript-key-order robustness;
+- the stripped-context grid;
+- the 24x24 direct DISH-vs-Petri comparison;
+- the Opus 4.7 benign-seed auditor sweep;
+- the per-target auditor-behavior dimension shifts.
+
+Every figure was re-rendered from its stored input data, and the result is byte-identical to
+the camera-ready PNG. `figure_data/dish/README.md` documents the columns and, for each
+figure, what `n` counts and how the error bar is computed. The scripts are copied verbatim
+from the DISH experiment codebase (see `SOURCES.md`). They read the full experiment outputs,
+which are not distributed, so they serve as provenance. The 12 coding-agent seed instructions and their rephrases are in
+`seeds/dish_coding_agent_seeds.json`.
 
 ### `data/wildchat/`
 

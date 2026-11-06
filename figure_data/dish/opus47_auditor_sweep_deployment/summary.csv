@@ -1,0 +1,11 @@
+target,measure,condition,n,mean,ci_half,ci_lower,ci_upper
+opus-4.7,winrate_vs_matched_deployment,baseline:auditor_sonnet-4.6_normal_seeds,100,0.15,0.0698891507049777,0.09305903191162297,0.23283733332157835
+opus-4.7,winrate_vs_matched_deployment,dish:auditor_sonnet-4.6_normal_seeds,100,0.1,0.059569381377264634,0.05522854161313613,0.1743673043676654
+opus-4.7,winrate_vs_matched_deployment,baseline:auditor_sonnet-4.6_rephrased_seeds,100,0.16,0.07162621104710348,0.10095202349473717,0.24420444558894414
+opus-4.7,winrate_vs_matched_deployment,dish:auditor_sonnet-4.6_rephrased_seeds,100,0.11,0.061886655363389484,0.06254131955225126,0.18631463027903022
+opus-4.7,winrate_vs_matched_deployment,baseline:auditor_opus-4.7_normal_seeds,100,0.22,0.08034680105672252,0.15001174503655804,0.3107053471500031
+opus-4.7,winrate_vs_matched_deployment,dish:auditor_opus-4.7_normal_seeds,100,0.13,0.06611714018197806,0.07757093858414264,0.20980521894809878
+opus-4.7,winrate_vs_matched_deployment,baseline:auditor_opus-4.8_normal_seeds,100,0.17,0.0732735258693491,0.10893476059773155,0.25548181233642975
+opus-4.7,winrate_vs_matched_deployment,dish:auditor_opus-4.8_normal_seeds,100,0.18,0.07483702184981023,0.11700131654251038,0.26667536024213084
+opus-4.7,winrate_vs_matched_deployment,baseline:auditor_gpt-5.4_normal_seeds,100,0.09,0.05709587590127589,0.04807199516388488,0.16226374696643667
+opus-4.7,winrate_vs_matched_deployment,dish:auditor_gpt-5.4_normal_seeds,100,0.16,0.07162621104710348,0.10095202349473717,0.24420444558894414
