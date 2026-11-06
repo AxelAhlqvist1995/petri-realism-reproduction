@@ -118,6 +118,7 @@ See `figure_data/dish/README.md` for the method and the column definitions.
 | `figure_data/dish/README.md` | Written for this repo |
 | `seeds/dish_coding_agent_seeds.json` | Originals: `src/petri/tasks/datasets/dish_compatible_seeds.csv`. Rephrases: `experiments/260605_dish_cr_pipeline_rephrased_seeds/dish_compatible_seeds_rephrased.csv`. Checked byte-for-byte against the seed instruction recorded in each coding audit log behind the figures. |
 | `seeds/paper_seed_sets.json` (`dish_coding_24`, `dish_coding_original_12`) | The same two CSVs; seed positions as used by the coding-figure render scripts |
+| `seeds/paper_seed_sets.json` (`dish_deployment_recreation_50`) | `original_sample_id` metadata of the 55 deployment re-creation metric evals behind the deployment figures (listed in the figures' input data files above); split `deployment_50` of the private CBAI transcript dataset |
 
 ## How the full judge prompt was assembled
 
